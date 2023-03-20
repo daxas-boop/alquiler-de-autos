@@ -1,0 +1,45 @@
+{% extends "views/layouts/index.njk" %}
+
+{% block body %}
+  <div class="container is-max-desktop mt-6">
+    <p class="ml-1 is-size-5">Cantidad de autos: {{cars.length}}</p>
+    <div class="table-container mt-1">
+      <table class="table is-bordered is-size-5 is-striped has-text-centered is-hoverable is-fullwidth">
+        <thead>
+          <tr>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Año</th>
+            <th>
+              <abbr title="Kilometraje">Kms</abbr>
+            </th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for car in cars %}
+            <tr>
+              <td>{{car.brand}}</td>
+              <td>{{car.model}}</td>
+              <td>{{car.manufactureYear}}</td>
+              <td>{{car.kilometerMileage}}</td>
+              <td>
+                <div class="buttons is-flex-wrap-nowrap">
+                  <a class="button is-rounded is-info mx-auto" href={{'/car/view/' + car.id}}>Ver</a>
+                  <a class="button is-rounded is-link mx-auto" href={{'/car/edit/' + car.id}}>Editar</a>
+                  <a class="button is-rounded is-danger mx-auto" href={{'/car/delete/' + car.id}}>Borrar</a>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% if cars.length === 0 %}
+      <div class="has-text-centered">
+        <p class=" is-size-4">No hay autos</p>
+        <a class="is-info">Crea uno</a>
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}
