@@ -1,0 +1,77 @@
+<form method="POST" action="/car/save" >
+  <input type="text" name="id" value="{{ car.id if car }}" hidden readonly>
+  <div class="field">
+    <label class="label">Brand</label>
+    <div class="control">
+      <input name="brand" class="input" type="text" placeholder="Enter brand name" value="{{ car.brand if car }}" required>
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Model</label>
+    <div class="control">
+      <input name="model" class="input" type="text" placeholder="Enter model name" value="{{ car.model if car }}" required>
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Manufacture year</label>
+    <div class="control">
+      <input name="manufacture-year" class="input" type="number" placeholder="Enter manufacture year" value="{{ car.manufactureYear if car }}" required>
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Kilometer mileage</label>
+    <div class="control">
+      <input name="kilometer-mileage" class="input" type="number" placeholder="Enter kilometer mileage" value="{{ car.kilometerMileage if car }}" required>
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Color</label>
+    <div class="control">
+      <input name="color" class="input" type="text" placeholder="Enter color" value="{{ car.color if car }}" required>
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Has air conditioning</label>
+    <div class="control">
+      <label class="radio">
+        <input type="radio" name="has-air-conditioning" value="yes" {{ "checked" if car.hasAirConditioning == "yes" }} required>
+        Yes
+      </label>
+      <label class="radio">
+        <input type="radio" name="has-air-conditioning" value="no" {{ "checked" if car.hasAirConditioning == "no" }} required>
+        No
+      </label>
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Passengers</label>
+    <div class="control">
+      <input name="passengers" class="input" type="number" placeholder="Enter number of passengers" value="{{ car.passengers if car }}" required>
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Transmission</label>
+    <div class="control">
+      <label class="radio">
+        <input type="radio" name="transmission" value="manual" {{ "checked" if car.transmission == "manual" }} required>
+        Manual
+      </label>
+      <label class="radio">
+        <input type="radio" name="transmission" value="automatic" {{ "checked" if car.transmission == "automatic" }} required>
+        Automatic
+      </label>
+    </div>
+  </div>
+
+  <div class="buttons">
+    <a href="/car" class="button is-dark">Cancel</a>
+    <button type="submit" class="button is-link">Send</button>
+  </div>
+</form>

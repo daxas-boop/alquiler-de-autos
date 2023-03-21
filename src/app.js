@@ -5,6 +5,7 @@ const { initialize: initializeCarModule } = require('./module/car/module');
 require('dotenv').config();
 
 const app = express();
+app.use(express.urlencoded());
 
 app.set('view engine', 'njk');
 nunjucks.configure('./src/module', {

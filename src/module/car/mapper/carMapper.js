@@ -1,5 +1,29 @@
 const Car = require('../entity/car');
 
+function fromFormToEntity({
+  id,
+  brand,
+  model,
+  'manufacture-year': manufactureYear,
+  'kilometer-mileage': kilometerMileage,
+  color,
+  'has-air-conditioning': hasAirConditioning,
+  passengers,
+  transmission,
+}) {
+  return new Car(
+    id,
+    brand,
+    model,
+    manufactureYear,
+    kilometerMileage,
+    color,
+    hasAirConditioning,
+    passengers,
+    transmission
+  );
+}
+
 function fromDbToEntity({
   id,
   brand,
@@ -11,7 +35,7 @@ function fromDbToEntity({
   passengers,
   transmission,
 }) {
-  return new Car({
+  return new Car(
     id,
     brand,
     model,
@@ -20,8 +44,8 @@ function fromDbToEntity({
     color,
     hasAirConditioning,
     passengers,
-    transmission,
-  });
+    transmission
+  );
 }
 
-module.exports = fromDbToEntity;
+module.exports = { fromDbToEntity, fromFormToEntity };

@@ -1,0 +1,6 @@
+{% extends "views/layouts/index.njk" %}
+
+{% block body %}
+  <h2 class="has-text-centered is-size-2">Editing car #{{car.id}}</h2>
+  {% include "car/views/layouts/car-form.njk" %}
+{% endblock %}

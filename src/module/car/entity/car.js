@@ -1,5 +1,5 @@
 class Car {
-  constructor({
+  constructor(
     id,
     brand,
     model,
@@ -8,8 +8,8 @@ class Car {
     color,
     hasAirConditioning,
     passengers,
-    transmission,
-  }) {
+    transmission
+  ) {
     this.id = id;
     this.brand = brand;
     this.model = model;
