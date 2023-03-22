@@ -25,33 +25,53 @@ class CarController {
   }
 
   async confirmDelete(req, res) {
-    const id = req.params.id;
-    const car = await this.service.getById(id);
-    res.render('car/views/delete.njk', { car });
+    try {
+      const id = req.params.id;
+      const car = await this.service.getById(id);
+      res.render('car/views/delete.njk', { car });
+    } catch (e) {
+      res.render('car/views/error.njk', { error: e.message });
+    }
   }
 
   async edit(req, res) {
-    const id = req.params.id;
-    const car = await this.service.getById(id);
-    res.render('car/views/edit.njk', { car });
+    try {
+      const id = req.params.id;
+      const car = await this.service.getById(id);
+      res.render('car/views/edit.njk', { car });
+    } catch (e) {
+      res.render('car/views/error.njk', { error: e.message });
+    }
   }
 
   async view(req, res) {
-    const id = req.params.id;
-    const car = await this.service.getById(id);
-    res.render('car/views/view.njk', { car });
+    try {
+      const id = req.params.id;
+      const car = await this.service.getById(id);
+      res.render('car/views/view.njk', { car });
+    } catch (e) {
+      res.render('car/views/error.njk', { error: e.message });
+    }
   }
 
   async save(req, res) {
-    const car = fromFormToEntity(req.body);
-    const newCar = await this.service.save(car);
-    res.redirect('/car/view/' + newCar.id);
+    try {
+      const car = fromFormToEntity(req.body);
+      const newCar = await this.service.save(car);
+      res.redirect('/car/view/' + newCar.id);
+    } catch (e) {
+      res.render('car/views/error.njk', { error: e.message });
+    }
   }
 
   async delete(req, res) {
-    const id = req.params.id;
-    await this.service.delete(id);
-    res.redirect('/car');
+    try {
+      const id = req.params.id;
+      await this.service.delete(id);
+      res.redirect('/car');
+    } catch (e) {
+      res.render('car/views/error.njk', { error: e.message });
+    }
   }
 }
 

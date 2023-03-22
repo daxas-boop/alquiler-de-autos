@@ -1,4 +1,8 @@
 const { fromDbToEntity } = require('../mapper/carMapper');
+const CarNotFoundError = require('../error/CarNotFoundError');
+const CarIdNotDefinedError = require('../error/CarIdNotDefinedError');
+const Car = require('../entity/car');
+const CarNotDefinedError = require('../error/CarNotDefinedError');
 
 class CarRepository {
   constructor(databaseAdapter) {
@@ -25,6 +29,10 @@ class CarRepository {
   }
 
   getById(id) {
+    if (id === undefined) {
+      throw new CarIdNotDefinedError();
+    }
+
     const car = this.databaseAdapter
       .prepare(
         `SELECT
@@ -41,10 +49,19 @@ class CarRepository {
         WHERE id = ?`
       )
       .get(id);
+
+    if (!car) {
+      throw new CarNotFoundError(`The car with id ${id} was not found`);
+    }
+
     return fromDbToEntity(car);
   }
 
   save(car) {
+    if (!(car instanceof Car)) {
+      throw new CarNotDefinedError();
+    }
+
     let id;
     if (car.id) {
       id = car.id;
@@ -102,6 +119,10 @@ class CarRepository {
   }
 
   delete(id) {
+    if (id === undefined) {
+      throw new CarIdNotDefinedError();
+    }
+
     this.databaseAdapter.prepare('DELETE FROM cars WHERE id = ?').run(id);
   }
 }
