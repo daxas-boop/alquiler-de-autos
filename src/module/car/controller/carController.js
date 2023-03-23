@@ -28,7 +28,7 @@ class CarController {
     try {
       const id = req.params.id;
       const car = await this.service.getById(id);
-      res.render('car/views/delete.njk', { car });
+      res.render('car/views/delete.njk', { id: car.id });
     } catch (e) {
       res.render('car/views/error.njk', { error: e.message });
     }
