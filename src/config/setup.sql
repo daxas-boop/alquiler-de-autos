@@ -12,5 +12,3 @@ CREATE TABLE cars (
   created_at DATE DEFAULT (datetime('now', 'localtime')) NOT NULL,
   updated_at DATE DEFAULT (datetime('now', 'localtime')) NOT NULL
 );
-
-INSERT INTO cars(brand, model, manufacture_year, kilometer_mileage, color, has_air_conditioning, passengers, transmission) VALUES("Ford", "Ka", "2015", 200000, 'Gris', "Si", 4, "Manual");
