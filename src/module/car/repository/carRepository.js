@@ -51,7 +51,7 @@ class CarRepository {
       .get(id);
 
     if (!car) {
-      throw new CarNotFoundError(`The car with id ${id} was not found`);
+      throw new CarNotFoundError();
     }
 
     return fromDbToEntity(car);
@@ -124,6 +124,7 @@ class CarRepository {
     }
 
     this.databaseAdapter.prepare('DELETE FROM cars WHERE id = ?').run(id);
+    return true;
   }
 }
 
