@@ -1,0 +1,72 @@
+<form method="POST" action="/customer/save" >
+  {% if customer %}
+    <input type="text" name="id" value="{{ customer.id }}" hidden readonly>
+  {% endif %}
+  <div class="field">
+    <label class="label">Name</label>
+    <div class="control">
+      <input name="name" class="input" type="text" placeholder="Enter name" value="{{ customer.name if customer }}" required>
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Surname</label>
+    <div class="control">
+      <input name="surname" class="input" type="text" placeholder="Enter surname" value="{{ customer.surname if customer }}" required>
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Document type</label>
+    <div class="control">
+      <input name="document-type" class="input" type="text" placeholder="Enter document type" value="{{ customer.documentType if customer }}" required>
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Document number</label>
+    <div class="control">
+      <input name="document-number" class="input" type="number" placeholder="Enter document number" value="{{ customer.documentNumber if customer }}" required>
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Nationality</label>
+    <div class="control">
+      <input name="nationality" class="input" type="text" placeholder="Enter nationality" value="{{ customer.nationality if customer }}" required>
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Address</label>
+    <div class="control">
+      <input name="address" class="input" type="text" placeholder="Enter address" value="{{ customer.address if customer }}" required>
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Phone</label>
+    <div class="control">
+      <input name="phone" class="input" type="tel" placeholder="Enter phone number" value="{{ customer.phone if customer }}" required>
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">E-mail</label>
+    <div class="control">
+      <input name="email" class="input" type="email" placeholder="Enter e-mail address" value="{{ customer.email if customer }}" required>
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Birthdate</label>
+    <div class="control">
+      <input name="birthdate" class="input" type="date" placeholder="Enter birthdate" value="{{ customer.birthdate.toISOString().split('T')[0] if customer }}" required>
+    </div>
+  </div>
+
+  <div class="buttons">
+    <a href="/customer" class="button is-dark">Cancel</a>
+    <button type="submit" class="button is-link">Send</button>
+  </div>
+</form>

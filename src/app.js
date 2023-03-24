@@ -2,6 +2,7 @@ const express = require('express');
 const configureDI = require('./config/di');
 const nunjucks = require('nunjucks');
 const { initialize: initializeCarModule } = require('./module/car/module');
+const { initialize: initializeCustomerModule } = require('./module/customer/module');
 require('dotenv').config();
 
 const app = express();
@@ -15,6 +16,7 @@ nunjucks.configure('./src/module', {
 
 const container = configureDI();
 initializeCarModule(app, container);
+initializeCustomerModule(app, container);
 
 const carController = container.get('CarController');
 app.get('/', carController.index.bind(carController));

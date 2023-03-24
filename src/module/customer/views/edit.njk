@@ -1,0 +1,6 @@
+{% extends "views/layouts/index.njk" %}
+
+{% block body %}
+  <h2 class="has-text-centered is-size-2">Editing customer #{{customer.id}}</h2>
+  {% include "customer/views/layouts/customer-form.njk" %}
+{% endblock %}

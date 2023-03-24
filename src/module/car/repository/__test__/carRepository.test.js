@@ -6,7 +6,7 @@ const CarNotFoundError = require('../../error/CarNotFoundError');
 const CarRepository = require('../carRepository');
 const { createNewCar } = require('./car.fixture');
 
-const sequelize = new Sequelize('sqlite::memory');
+const sequelize = new Sequelize('sqlite::memory', { logging: false });
 
 let repository;
 

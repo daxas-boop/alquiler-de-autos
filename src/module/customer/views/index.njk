@@ -1,0 +1,38 @@
+{% extends "views/layouts/index.njk" %}
+
+{% block body %}
+  <p class="ml-1 is-size-5">Number of customers: {{customers.length}}</p>
+  <div class="table-container mt-1" style="max-height: 85vh; overflow-y: auto;">
+    <table class="table is-bordered is-size-5 is-striped has-text-centered is-hoverable is-fullwidth">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Surname</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for customer in customers %}
+          <tr>
+            <td>#{{customer.id}}</td>
+            <td>{{customer.name}}</td>
+            <td>{{customer.surname}}</td>
+            <td>
+              <div class="buttons is-centered is-flex-wrap-nowrap">
+                <a class="button is-rounded is-info is-outlined" href={{'/customer/view/' + customer.id}}>View</a>
+                <a class="button is-rounded is-link is-outlined" href={{'/customer/edit/' + customer.id}}>Edit</a>
+                <a class="button is-rounded is-danger is-outlined" href={{'/customer/delete/' + customer.id}}>Delete</a>
+              </div>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% if customers.length === 0 %}
+    <div class="has-text-centered mt-5">
+      <a class="button is-info is-outlined is-rounded" href="/customer/create">Add a new customer</a>
+    </div>
+  {% endif %}
+{% endblock %}

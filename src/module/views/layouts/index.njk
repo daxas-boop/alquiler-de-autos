@@ -17,9 +17,26 @@
             width="28"
             height="28"/>
         </a>
-        <a class="navbar-item" href="/car/create">Add a new car</a>
+
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">Customers</a>
+          <div class="navbar-dropdown is-size-6">
+            <a class="navbar-item" href="/customer">Manage the customers</a>
+            <a class="navbar-item" href="/customer/create">Add a new customer</a>
+          </div>
+        </div>
+
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">Cars</a>
+          <div class="navbar-dropdown is-size-6">
+            <a class="navbar-item" href="/car">Manage the cars</a>
+            <a class="navbar-item" href="/car/create">Add a new car</a>
+          </div>
+        </div>
+
       </div>
     </div>
+
   </nav>
   <div class="container is-max-desktop mt-6 mb-6">
     {% block body %}{% endblock %}
