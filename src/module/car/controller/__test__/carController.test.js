@@ -94,7 +94,7 @@ describe('CarController', () => {
         formMock['manufacture-year'],
         formMock['kilometer-mileage'],
         formMock.color,
-        formMock['has-air-conditioning'],
+        true,
         formMock.passengers,
         formMock.transmission
       )

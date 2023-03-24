@@ -1,9 +1,17 @@
-const Database = require('better-sqlite3');
+const { Sequelize } = require('sequelize');
 const { default: DIContainer, object, factory } = require('rsdi');
 const { CarController, CarService, CarRepository } = require('../module/car/module');
+const { CarModel } = require('../module/car/model/carModel');
 
-function configureDatabaseAdapter() {
-  return new Database(process.env.DB_PATH);
+function configureSequelize() {
+  return new Sequelize({
+    dialect: 'sqlite',
+    storage: process.env.DB_PATH,
+  });
+}
+
+function configureCarModel(container) {
+  return CarModel.initialize(container.get('Sequelize'));
 }
 
 function configureDI() {
@@ -11,8 +19,9 @@ function configureDI() {
   container.add({
     CarController: object(CarController).construct(container.use('CarService')),
     CarService: object(CarService).construct(container.use('CarRepository')),
-    CarRepository: object(CarRepository).construct(container.use('DatabaseAdapter')),
-    DatabaseAdapter: factory(configureDatabaseAdapter),
+    CarRepository: object(CarRepository).construct(container.use('CarModel')),
+    CarModel: factory(configureCarModel),
+    Sequelize: factory(configureSequelize),
   });
   return container;
 }

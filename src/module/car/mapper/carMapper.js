@@ -18,7 +18,7 @@ function fromFormToEntity({
     manufactureYear,
     kilometerMileage,
     color,
-    hasAirConditioning,
+    hasAirConditioning === 'yes',
     passengers,
     transmission
   );
@@ -28,10 +28,10 @@ function fromDbToEntity({
   id,
   brand,
   model,
-  manufacture_year: manufactureYear,
-  kilometer_mileage: kilometerMileage,
+  manufactureYear,
+  kilometerMileage,
   color,
-  has_air_conditioning: hasAirConditioning,
+  hasAirConditioning,
   passengers,
   transmission,
 }) {

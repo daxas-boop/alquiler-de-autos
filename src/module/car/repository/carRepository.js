@@ -5,126 +5,42 @@ const Car = require('../entity/car');
 const CarNotDefinedError = require('../error/CarNotDefinedError');
 
 class CarRepository {
-  constructor(databaseAdapter) {
-    this.databaseAdapter = databaseAdapter;
+  constructor(CarModel) {
+    this.CarModel = CarModel;
   }
 
-  getAll() {
-    const cars = this.databaseAdapter
-      .prepare(
-        `SELECT
-        id, 
-        brand,
-        model,
-        manufacture_year,
-        kilometer_mileage,
-        color,
-        has_air_conditioning,
-        passengers,
-        transmission
-        FROM cars`
-      )
-      .all();
+  async getAll() {
+    const cars = await this.CarModel.findAll();
     return cars.map((car) => fromDbToEntity(car));
   }
 
-  getById(id) {
+  async getById(id) {
     if (id === undefined) {
       throw new CarIdNotDefinedError();
     }
-
-    const car = this.databaseAdapter
-      .prepare(
-        `SELECT
-        id,
-        brand,
-        model,
-        manufacture_year,
-        kilometer_mileage,
-        color,
-        has_air_conditioning,
-        passengers,
-        transmission
-        FROM cars
-        WHERE id = ?`
-      )
-      .get(id);
-
+    const car = await this.CarModel.findByPk(id);
     if (!car) {
       throw new CarNotFoundError();
     }
-
-    return fromDbToEntity(car);
+    return fromDbToEntity(car.dataValues);
   }
 
-  save(car) {
+  async save(car) {
     if (!(car instanceof Car)) {
       throw new CarNotDefinedError();
     }
+    const build = await this.CarModel.build(car, { isNewRecord: !car.id });
+    await build.save();
 
-    let id;
-    if (car.id) {
-      id = car.id;
-      this.databaseAdapter
-        .prepare(
-          `UPDATE cars SET
-          brand = ?,
-          model = ?,
-          manufacture_year = ?,
-          kilometer_mileage = ?,
-          color = ?,
-          has_air_conditioning = ?,
-          passengers = ?,
-          transmission = ?
-          WHERE id = ?`
-        )
-        .run(
-          car.brand,
-          car.model,
-          car.manufactureYear,
-          car.kilometerMileage,
-          car.color,
-          car.hasAirConditioning,
-          car.passengers,
-          car.transmission,
-          car.id
-        );
-    } else {
-      const result = this.databaseAdapter
-        .prepare(
-          `INSERT INTO cars(
-            brand,
-            model,
-            manufacture_year,
-            kilometer_mileage,
-            color,
-            has_air_conditioning,
-            passengers,
-            transmission
-            ) VALUES(?,?,?,?,?,?,?,?)`
-        )
-        .run(
-          car.brand,
-          car.model,
-          car.manufactureYear,
-          car.kilometerMileage,
-          car.color,
-          car.hasAirConditioning,
-          car.passengers,
-          car.transmission
-        );
-      id = result.lastInsertRowid;
-    }
-    return this.getById(id);
+    return this.getById(build.id);
   }
 
-  delete(id) {
+  async delete(id) {
     if (id === undefined) {
       throw new CarIdNotDefinedError();
     }
 
-    this.databaseAdapter.prepare('DELETE FROM cars WHERE id = ?').run(id);
-    return true;
+    return !!(await this.CarModel.destroy({ where: { id } }));
   }
 }
 

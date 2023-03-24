@@ -1,5 +1,7 @@
 <form method="POST" action="/car/save" >
-  <input type="text" name="id" value="{{ car.id if car }}" hidden readonly>
+  {% if car %}
+    <input type="text" name="id" value="{{ car.id }}" hidden readonly>
+  {% endif %}
   <div class="field">
     <label class="label">Brand</label>
     <div class="control">
@@ -39,11 +41,11 @@
     <label class="label">Has air conditioning</label>
     <div class="control">
       <label class="radio">
-        <input type="radio" name="has-air-conditioning" value="yes" {{ "checked" if car.hasAirConditioning == "yes" }} required>
+        <input type="radio" name="has-air-conditioning" value="yes" {{ "checked" if car.hasAirConditioning }} required>
         Yes
       </label>
       <label class="radio">
-        <input type="radio" name="has-air-conditioning" value="no" {{ "checked" if car.hasAirConditioning == "no" }} required>
+        <input type="radio" name="has-air-conditioning" value="no" {{ "checked" if car.hasAirConditioning === false }} required>
         No
       </label>
     </div>
