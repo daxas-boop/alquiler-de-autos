@@ -7,7 +7,7 @@ class CustomerController {
   }
 
   configureRoutes(app) {
-    app.get(`${this.ROUTE}`, this.index.bind(this));
+    app.get(`${this.ROUTE}`, this.viewAll.bind(this));
     app.get(`${this.ROUTE}/view/:id`, this.view.bind(this));
     app.get(`${this.ROUTE}/create`, this.create.bind(this));
     app.get(`${this.ROUTE}/edit/:id`, this.edit.bind(this));
@@ -16,9 +16,9 @@ class CustomerController {
     app.post(`${this.ROUTE}/delete/:id`, this.delete.bind(this));
   }
 
-  async index(req, res) {
+  async viewAll(req, res) {
     const customers = await this.service.getAll();
-    res.render('customer/views/index.njk', { customers });
+    res.render('customer/views/view-all.njk', { customers });
   }
 
   create(req, res) {

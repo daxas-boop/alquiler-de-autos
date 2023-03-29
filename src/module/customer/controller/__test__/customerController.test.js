@@ -22,11 +22,11 @@ describe('CustomerController', () => {
     expect(app.post).toHaveBeenCalledTimes(2);
   });
 
-  test('index should render index.njk', async () => {
+  test('viewAll should render view-all.njk', async () => {
     const renderMock = jest.fn();
-    await controller.index({}, { render: renderMock });
+    await controller.viewAll({}, { render: renderMock });
     expect(renderMock).toHaveBeenCalledTimes(1);
-    expect(renderMock).toHaveBeenCalledWith('customer/views/index.njk', { customers: [] });
+    expect(renderMock).toHaveBeenCalledWith('customer/views/view-all.njk', { customers: [] });
   });
 
   test('create should render create.njk', () => {
