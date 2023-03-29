@@ -1,10 +1,10 @@
 const { Sequelize } = require('sequelize');
-const { CarModel } = require('../../model/carModel');
+const CarModel = require('../../model/carModel');
 const CarIdNotDefinedError = require('../../error/CarIdNotDefinedError');
 const CarNotDefinedError = require('../../error/CarNotDefinedError');
 const CarNotFoundError = require('../../error/CarNotFoundError');
 const CarRepository = require('../carRepository');
-const { createNewCar } = require('./car.fixture');
+const createCarMock = require('./car.fixture');
 
 const sequelize = new Sequelize('sqlite::memory', { logging: false });
 
@@ -20,14 +20,14 @@ describe('CarRepository', () => {
     await sequelize.sync({ force: true });
   });
   test('save should create a new car if an id is NOT passed', async () => {
-    const savedCar = await repository.save(createNewCar());
+    const savedCar = await repository.save(createCarMock());
     expect(savedCar.id).toEqual(1);
     expect(savedCar.brand).toEqual('Ford');
     expect(savedCar.model).toEqual('Ka');
   });
 
   test('save should update a car if an id is passed', async () => {
-    const savedCar = await repository.save(createNewCar());
+    const savedCar = await repository.save(createCarMock());
     expect(savedCar.id).toEqual(1);
     expect(savedCar.brand).toEqual('Ford');
     expect(savedCar.model).toEqual('Ka');
@@ -45,14 +45,14 @@ describe('CarRepository', () => {
   });
 
   test('getById returns a car', async () => {
-    await repository.save(createNewCar());
+    await repository.save(createCarMock());
     const car = await repository.getById(1);
     expect(car.id).toEqual(1);
     expect(car.brand).toEqual('Ford');
   });
 
   test('getById throws an error if the car was not found', async () => {
-    await repository.save(createNewCar());
+    await repository.save(createCarMock());
     await expect(repository.getById(999)).rejects.toThrow(CarNotFoundError);
   });
   test('getById throws an error if an id is NOT passed', async () => {
@@ -60,8 +60,8 @@ describe('CarRepository', () => {
   });
 
   test('getAll returns all the cars', async () => {
-    await repository.save(createNewCar());
-    await repository.save(createNewCar());
+    await repository.save(createCarMock());
+    await repository.save(createCarMock());
     const cars = await repository.getAll();
     expect(cars).toHaveLength(2);
     expect(cars[0].id).toEqual(1);
@@ -73,7 +73,7 @@ describe('CarRepository', () => {
   });
 
   test('delete should delete a car from the database', async () => {
-    await repository.save(createNewCar());
+    await repository.save(createCarMock());
     const savedCar = await repository.getById(1);
     expect(savedCar.id).toBe(1);
     await repository.delete(savedCar.id);

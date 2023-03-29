@@ -1,6 +1,6 @@
 const Car = require('../../entity/car');
 const CarController = require('../carController');
-const { createNewCar } = require('../../repository/__test__/car.fixture');
+const createCarMock = require('../../repository/__test__/car.fixture');
 
 const serviceMock = {
   getAll: jest.fn(() => Promise.resolve([])),
@@ -42,7 +42,7 @@ describe('CarController', () => {
 
   test('view should render view.njk with a car', async () => {
     const renderMock = jest.fn();
-    const carMock = createNewCar(1);
+    const carMock = createCarMock(1);
     serviceMock.getById.mockImplementationOnce(() => Promise.resolve(carMock));
     await controller.view({ params: { id: carMock.id } }, { render: renderMock });
     expect(renderMock).toHaveBeenCalledTimes(1);
@@ -130,7 +130,7 @@ describe('CarController', () => {
 
   test('edit should render edit.njk with a car', async () => {
     const renderMock = jest.fn();
-    const carMock = createNewCar(1);
+    const carMock = createCarMock(1);
     serviceMock.getById.mockImplementationOnce(() => Promise.resolve(carMock));
     await controller.edit({ params: { id: carMock.id } }, { render: renderMock });
     expect(renderMock).toHaveBeenCalledTimes(1);

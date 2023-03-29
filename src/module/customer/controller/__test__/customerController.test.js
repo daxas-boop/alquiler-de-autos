@@ -1,6 +1,6 @@
 const Customer = require('../../entity/customer');
 const CustomerController = require('../customerController');
-const { createNewCustomer } = require('../../repository/__test__/customer.fixture');
+const createCustomerMock = require('../../repository/__test__/customer.fixture');
 
 const serviceMock = {
   getAll: jest.fn(() => Promise.resolve([])),
@@ -38,7 +38,7 @@ describe('CustomerController', () => {
 
   test('view should render view.njk with a customer', async () => {
     const renderMock = jest.fn();
-    const customerMock = createNewCustomer(1);
+    const customerMock = createCustomerMock(1);
     serviceMock.getById.mockImplementationOnce(() => Promise.resolve(customerMock));
     await controller.view({ params: { id: customerMock.id } }, { render: renderMock });
     expect(renderMock).toHaveBeenCalledTimes(1);
@@ -125,7 +125,7 @@ describe('CustomerController', () => {
 
   test('edit should render edit.njk with a customer', async () => {
     const renderMock = jest.fn();
-    const customerMock = createNewCustomer(1);
+    const customerMock = createCustomerMock(1);
     serviceMock.getById.mockImplementationOnce(() => Promise.resolve(customerMock));
     await controller.edit({ params: { id: customerMock.id } }, { render: renderMock });
     expect(renderMock).toHaveBeenCalledTimes(1);

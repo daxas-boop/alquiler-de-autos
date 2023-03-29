@@ -1,6 +1,6 @@
 const Customer = require('../../entity/customer');
 
-function createNewCustomer(id) {
+function createCustomerMock(id) {
   return new Customer(
     id,
     'Juan',
@@ -15,4 +15,4 @@ function createNewCustomer(id) {
   );
 }
 
-module.exports = { createNewCustomer };
+module.exports = createCustomerMock;

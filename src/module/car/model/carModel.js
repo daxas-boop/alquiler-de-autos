@@ -79,4 +79,4 @@ class CarModel extends Model {
   }
 }
 
-module.exports = { CarModel };
+module.exports = CarModel;

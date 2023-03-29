@@ -1,10 +1,10 @@
 const { Sequelize } = require('sequelize');
-const { CustomerModel } = require('../../model/customerModel');
+const CustomerModel = require('../../model/customerModel');
 const CustomerIdNotDefinedError = require('../../error/CustomerIdNotDefinedError');
 const CustomerNotDefinedError = require('../../error/CustomerNotDefinedError');
 const CustomerNotFoundError = require('../../error/CustomerNotFoundError');
 const CustomerRepository = require('../customerRepository');
-const { createNewCustomer } = require('./customer.fixture');
+const createCustomerMock = require('./customer.fixture');
 
 const sequelize = new Sequelize('sqlite::memory', { logging: false });
 
@@ -20,13 +20,13 @@ describe('CustomerRepository', () => {
     await sequelize.sync({ force: true });
   });
   test('save should create a new customer if the entity has no id', async () => {
-    const customerMock = createNewCustomer();
+    const customerMock = createCustomerMock();
     const savedCustomer = await repository.save(customerMock);
     expect(savedCustomer.id).toEqual(1);
   });
 
   test('save should update a customer if the entity has an id', async () => {
-    const customerMock = createNewCustomer();
+    const customerMock = createCustomerMock();
     const savedCustomer = await repository.save(customerMock);
     expect(savedCustomer.id).toEqual(1);
     savedCustomer.name = 'Pepe';
@@ -41,13 +41,13 @@ describe('CustomerRepository', () => {
   });
 
   test('getById returns a customer', async () => {
-    await repository.save(createNewCustomer());
+    await repository.save(createCustomerMock());
     const customer = await repository.getById(1);
     expect(customer.id).toEqual(1);
   });
 
   test('getById throws an error if the customer was not found', async () => {
-    await repository.save(createNewCustomer());
+    await repository.save(createCustomerMock());
     await expect(repository.getById(999)).rejects.toThrow(CustomerNotFoundError);
   });
 
@@ -56,8 +56,8 @@ describe('CustomerRepository', () => {
   });
 
   test('getAll returns all the customers', async () => {
-    await repository.save(createNewCustomer());
-    await repository.save(createNewCustomer());
+    await repository.save(createCustomerMock());
+    await repository.save(createCustomerMock());
     const customers = await repository.getAll();
     expect(customers).toHaveLength(2);
     expect(customers[0].id).toEqual(1);
@@ -69,7 +69,7 @@ describe('CustomerRepository', () => {
   });
 
   test('delete should delete a customer from the database', async () => {
-    await repository.save(createNewCustomer());
+    await repository.save(createCustomerMock());
     const savedCustomer = await repository.getById(1);
     expect(savedCustomer.id).toBe(1);
     await repository.delete(savedCustomer.id);

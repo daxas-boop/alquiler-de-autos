@@ -61,4 +61,4 @@ class CustomerModel extends Model {
   }
 }
 
-module.exports = { CustomerModel };
+module.exports = CustomerModel;
