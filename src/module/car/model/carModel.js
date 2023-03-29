@@ -22,10 +22,17 @@ class CarModel extends Model {
         manufactureYear: {
           type: DataTypes.INTEGER,
           allowNull: false,
+          validate: {
+            min: 1884,
+            max: new Date().getFullYear(),
+          },
         },
         kilometerMileage: {
           type: DataTypes.INTEGER,
           allowNull: false,
+          validate: {
+            min: 0,
+          },
         },
         color: {
           type: DataTypes.STRING,
@@ -38,8 +45,25 @@ class CarModel extends Model {
         passengers: {
           type: DataTypes.INTEGER,
           allowNull: false,
+          validate: {
+            min: 1,
+          },
+        },
+        pricePerDay: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+          validate: {
+            min: 1,
+          },
         },
         transmission: {
+          type: DataTypes.STRING,
+          allowNull: false,
+          validate: {
+            isIn: [['manual', 'automatic']],
+          },
+        },
+        image: {
           type: DataTypes.STRING,
           allowNull: false,
         },

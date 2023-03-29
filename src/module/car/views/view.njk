@@ -5,6 +5,9 @@
     <div class="card-header">
       <p class="card-header-title">Car Details</p>
     </div>
+    <figure class="image mt-2 mx-3">
+      <img alt="An image of the car" src="{{car.image.replace('public', '')}}">
+    </figure>
     <div class="card-content">
       <div class="table-container">
         <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth is-size-5">
@@ -26,15 +29,15 @@
               <td>{{ car.manufactureYear }}</td>
             </tr>
             <tr>
-              <td>Mileage in kms </td>
-              <td>{{ car.kilometerMileage }}</td>
+              <td>Mileage in kilometers </td>
+              <td>{{ car.kilometerMileage }} km</td>
             </tr>
             <tr>
               <td>Color</td>
               <td>{{ car.color }}</td>
             </tr>
             <tr>
-              <td>Has Air Conditioning</td>
+              <td>Has air conditioning</td>
               <td>{{ "Yes" if car.hasAirConditioning else "No" }}</td>
             </tr>
             <tr>
@@ -42,11 +45,16 @@
               <td>{{ car.passengers }}</td>
             </tr>
             <tr>
+              <td>Price</td>
+              <td>$ {{ car.pricePerDay }}</td>
+            </tr>
+            <tr>
               <td>Transmission</td>
               <td>{{ "Manual" if car.transmission == "manual" else "Automatic" }}</td>
             </tr>
           </tbody>
         </table>
+
       </div>
       <div class="has-text-centered">
         <a class="button is-rounded is-link is-outlined" href={{'/car/edit/' + car.id}}>Edit</a>

@@ -10,6 +10,7 @@ function fromFormToEntity({
   'has-air-conditioning': hasAirConditioning,
   passengers,
   transmission,
+  'price-per-day': pricePerDay,
 }) {
   return new Car(
     id,
@@ -20,7 +21,8 @@ function fromFormToEntity({
     color,
     hasAirConditioning === 'yes',
     passengers,
-    transmission
+    transmission,
+    pricePerDay
   );
 }
 
@@ -34,6 +36,8 @@ function fromDbToEntity({
   hasAirConditioning,
   passengers,
   transmission,
+  pricePerDay,
+  image,
 }) {
   return new Car(
     id,
@@ -44,7 +48,9 @@ function fromDbToEntity({
     color,
     hasAirConditioning,
     passengers,
-    transmission
+    transmission,
+    pricePerDay,
+    image
   );
 }
 

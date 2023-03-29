@@ -8,7 +8,9 @@ class Car {
     color,
     hasAirConditioning,
     passengers,
-    transmission
+    transmission,
+    pricePerDay,
+    image
   ) {
     this.id = id;
     this.brand = brand;
@@ -19,6 +21,8 @@ class Car {
     this.hasAirConditioning = hasAirConditioning;
     this.passengers = passengers;
     this.transmission = transmission;
+    this.pricePerDay = pricePerDay;
+    this.image = image;
   }
 }
 

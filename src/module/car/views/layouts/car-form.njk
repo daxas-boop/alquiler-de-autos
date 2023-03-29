@@ -1,79 +1,123 @@
-<form method="POST" action="/car/save" >
+<form method="POST" action="/car/save" enctype='multipart/form-data'>
   {% if car %}
     <input type="text" name="id" value="{{ car.id }}" hidden readonly>
   {% endif %}
+
   <div class="field">
     <label class="label">Brand</label>
-    <div class="control">
+    <div class="control has-icons-left">
       <input name="brand" class="input" type="text" placeholder="Enter brand name" value="{{ car.brand if car }}" required>
+      <span class="icon is-left">
+        <i class="fas fa-car"></i>
+      </span>
     </div>
   </div>
 
   <div class="field">
     <label class="label">Model</label>
-    <div class="control">
+    <div class="control has-icons-left">
       <input name="model" class="input" type="text" placeholder="Enter model name" value="{{ car.model if car }}" required>
+      <span class="icon is-left">
+        <i class="fas fa-car"></i>
+      </span>
     </div>
   </div>
 
   <div class="field">
     <label class="label">Manufacture year</label>
-    <div class="control">
-      <input name="manufacture-year" class="input" type="number" placeholder="Enter manufacture year" value="{{ car.manufactureYear if car }}" required>
+    <div class="control has-icons-left">
+      <input min=1884 id='manufacture-year' name="manufacture-year" class="input" type="number" placeholder="Enter manufacture year" value="{{ car.manufactureYear if car }}" required>
+      <span class="icon is-left">
+        <i class="fas fa-calendar-alt"></i>
+      </span>
     </div>
   </div>
 
   <div class="field">
     <label class="label">Kilometer mileage</label>
-    <div class="control">
-      <input name="kilometer-mileage" class="input" type="number" placeholder="Enter kilometer mileage" value="{{ car.kilometerMileage if car }}" required>
+    <div class="control has-icons-left">
+      <input min=0 name="kilometer-mileage" class="input" type="number" placeholder="Enter kilometer mileage" value="{{ car.kilometerMileage if car }}" required>
+      <span class="icon is-left">
+        <i class="fas fa-road"></i>
+      </span>
     </div>
   </div>
 
   <div class="field">
     <label class="label">Color</label>
-    <div class="control">
+    <div class="control has-icons-left">
       <input name="color" class="input" type="text" placeholder="Enter color" value="{{ car.color if car }}" required>
-    </div>
-  </div>
-
-  <div class="field">
-    <label class="label">Has air conditioning</label>
-    <div class="control">
-      <label class="radio">
-        <input type="radio" name="has-air-conditioning" value="yes" {{ "checked" if car.hasAirConditioning }} required>
-        Yes
-      </label>
-      <label class="radio">
-        <input type="radio" name="has-air-conditioning" value="no" {{ "checked" if car.hasAirConditioning === false }} required>
-        No
-      </label>
+      <span class="icon is-left">
+        <i class="fas fa-palette"></i>
+      </span>
     </div>
   </div>
 
   <div class="field">
     <label class="label">Passengers</label>
-    <div class="control">
-      <input name="passengers" class="input" type="number" placeholder="Enter number of passengers" value="{{ car.passengers if car }}" required>
+    <div class="control has-icons-left">
+      <input min=1 name="passengers" class="input" type="number" placeholder="Enter number of passengers" value="{{ car.passengers if car }}" required>
+      <span class="icon is-small is-left">
+        <i class="fas fa-users"></i>
+      </span>
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Price per day</label>
+    <div class="control has-icons-left">
+      <input min=1 name="price-per-day" class="input" type="number" placeholder="Price per day" value="{{ car.pricePerDay if car }}" required>
+      <span class="icon is-small is-left">
+        <i class="fas fa-dollar-sign"></i>
+      </span>
     </div>
   </div>
 
   <div class="field">
     <label class="label">Transmission</label>
-    <div class="control">
-      <label class="radio">
-        <input type="radio" name="transmission" value="manual" {{ "checked" if car.transmission == "manual" }} required>
-        Manual
-      </label>
-      <label class="radio">
-        <input type="radio" name="transmission" value="automatic" {{ "checked" if car.transmission == "automatic" }} required>
-        Automatic
-      </label>
+    <div class="control has-icons-left">
+      <div class="select is-fullwidth">
+        <select name="transmission" required>
+          <option value="manual" {{"selected" if car.transmission === 'manual' }}>Manual</option>
+          <option value="automatic" {{"selected" if car.transmission === 'automatic' }}>Automatic</option>
+        </select>
+      </div>
+      <div class="icon is-small is-left">
+        <i class="fas fa-cogs"></i>
+      </div>
     </div>
   </div>
 
-  <div class="buttons">
+  <div class="field">
+    <label class="label">Has air conditioning</label>
+    <div class="control has-icons-left">
+      <div class="select is-fullwidth">
+        <select name="has-air-conditioning" required>
+          <option value="no" {{"selected" if car.hasAirConditioning === false }}>No</option>
+          <option value="yes" {{"selected" if car.hasAirConditioning }}>Yes</option>
+        </select>
+      </div>
+      <div class="icon is-small is-left">
+        <i class="fas fa-snowflake"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Image</label>
+    <div class="control">
+      <figure class="image">
+        <img alt="Image of the car" src="{{ 'https://www.vw.com/web/vw/vci2/assets/images/vehicle-none.png' if not car else car.image.replace('public', '') }}">
+      </figure>
+      <input name="image" class="input" type="file" {{"required" if not car}}>
+    </div>
+  </div>
+  <div class="buttons is-flex is-justify-content-center">
     <a href="/car" class="button is-dark">Cancel</a>
     <button type="submit" class="button is-link">Send</button>
   </div>
 </form>
+
+{%block scripts %}
+  <script src='/scripts/carForm.js'></script>
+  {%endblock%}
