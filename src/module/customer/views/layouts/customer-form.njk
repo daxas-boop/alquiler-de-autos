@@ -4,69 +4,99 @@
   {% endif %}
   <div class="field">
     <label class="label">Name</label>
-    <div class="control">
+    <div class="control has-icons-left">
       <input name="name" class="input" type="text" placeholder="Enter name" value="{{ customer.name if customer }}" required>
+      <span class="icon is-small is-left">
+        <i class="fas fa-user"></i>
+      </span>
     </div>
   </div>
 
   <div class="field">
     <label class="label">Surname</label>
-    <div class="control">
+    <div class="control has-icons-left">
       <input name="surname" class="input" type="text" placeholder="Enter surname" value="{{ customer.surname if customer }}" required>
+      <span class="icon is-small is-left">
+        <i class="fas fa-user"></i>
+      </span>
     </div>
   </div>
 
   <div class="field">
     <label class="label">Document type</label>
-    <div class="control">
+    <div class="control has-icons-left">
       <input name="document-type" class="input" type="text" placeholder="Enter document type" value="{{ customer.documentType if customer }}" required>
+      <span class="icon is-small is-left">
+        <i class="fas fa-id-card"></i>
+      </span>
     </div>
   </div>
 
   <div class="field">
     <label class="label">Document number</label>
-    <div class="control">
+    <div class="control has-icons-left">
       <input name="document-number" class="input" type="number" placeholder="Enter document number" value="{{ customer.documentNumber if customer }}" required>
+      <span class="icon is-small is-left">
+        <i class="fas fa-id-card"></i>
+      </span>
     </div>
   </div>
 
   <div class="field">
     <label class="label">Nationality</label>
-    <div class="control">
+    <div class="control has-icons-left">
       <input name="nationality" class="input" type="text" placeholder="Enter nationality" value="{{ customer.nationality if customer }}" required>
+      <span class="icon is-small is-left">
+        <i class="fas fa-globe"></i>
+      </span>
     </div>
   </div>
 
   <div class="field">
     <label class="label">Address</label>
-    <div class="control">
+    <div class="control has-icons-left">
       <input name="address" class="input" type="text" placeholder="Enter address" value="{{ customer.address if customer }}" required>
+      <span class="icon is-small is-left">
+        <i class="fas fa-map-marker-alt"></i>
+      </span>
     </div>
   </div>
 
   <div class="field">
     <label class="label">Phone</label>
-    <div class="control">
+    <div class="control has-icons-left">
       <input name="phone" class="input" type="tel" placeholder="Enter phone number" value="{{ customer.phone if customer }}" required>
+      <span class="icon is-small is-left">
+        <i class="fas fa-phone"></i>
+      </span>
     </div>
   </div>
 
   <div class="field">
     <label class="label">E-mail</label>
-    <div class="control">
+    <div class="control has-icons-left">
       <input name="email" class="input" type="email" placeholder="Enter e-mail address" value="{{ customer.email if customer }}" required>
+      <span class="icon is-small is-left">
+        <i class="fas fa-envelope"></i>
+      </span>
     </div>
   </div>
 
   <div class="field">
     <label class="label">Birthdate</label>
-    <div class="control">
-      <input name="birthdate" class="input" type="date" placeholder="Enter birthdate" value="{{ customer.birthdate.toISOString().split('T')[0] if customer }}" required>
+    <div class="control has-icons-left">
+      <input id="birthdate" name="birthdate" class="input" type="date" placeholder="Enter birthdate" value="{{ customer.birthdate.toISOString().split('T')[0] if customer }}" required>
+      <span class="icon is-small is-left">
+        <i class="fas fa-birthday-cake"></i>
+      </span>
     </div>
   </div>
 
-  <div class="buttons">
+  <div class="buttons my-5">
     <a href="/customer" class="button is-dark">Cancel</a>
     <button type="submit" class="button is-link">Send</button>
   </div>
 </form>
+{% block scripts %}
+  <script src="/scripts/customerForm.js"></script>
+  {%endblock%}
