@@ -58,4 +58,33 @@
       </div>
     </div>
   </div>
+  <div class='notification mt-5'>
+    <p class='is-size-4 has-text-centered'>Recent reservations of this customer</p>
+    {% for reservation in customer.reservations %}
+      <div class="table-container mt-1">
+        <table class="table is-narrow is-fullwidth is-size-6">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Start date</th>
+              <th>End date</th>
+              <th>Total price</th>
+              <th>It is paid</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="has-text-link has-text-weight-bold">
+                <a href={{"/reservation/view/" + reservation.id}}>{{ reservation.id }}</a>
+              </td>
+              <td>{{ reservation.startDate.toISOString().split('T')[0] }}</td>
+              <td>{{ reservation.endDate.toISOString().split('T')[0] }}</td>
+              <td>$ {{ reservation.totalPrice }}</td>
+              <td>{{ "Yes" if reservation.isPaid else "No" }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    {% endfor %}
+  </div>
 {% endblock %}

@@ -1,5 +1,17 @@
 class Customer {
-  constructor(id, name, surname, documentType, documentNumber, nationality, address, phone, email, birthdate) {
+  constructor(
+    id,
+    name,
+    surname,
+    documentType,
+    documentNumber,
+    nationality,
+    address,
+    phone,
+    email,
+    birthdate,
+    reservations
+  ) {
     this.id = id;
     this.name = name;
     this.surname = surname;
@@ -10,6 +22,7 @@ class Customer {
     this.phone = phone;
     this.email = email;
     this.birthdate = birthdate;
+    this.reservations = reservations;
   }
 }
 

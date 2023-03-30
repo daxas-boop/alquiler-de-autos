@@ -26,19 +26,23 @@ function fromFormToEntity({
   );
 }
 
-function fromDbToEntity({
-  id,
-  brand,
-  model,
-  manufactureYear,
-  kilometerMileage,
-  color,
-  hasAirConditioning,
-  passengers,
-  transmission,
-  pricePerDay,
-  image,
-}) {
+function fromDbToEntity(
+  {
+    id,
+    brand,
+    model,
+    manufactureYear,
+    kilometerMileage,
+    color,
+    hasAirConditioning,
+    passengers,
+    transmission,
+    pricePerDay,
+    image,
+    reservations,
+  },
+  reservationMapper
+) {
   return new Car(
     id,
     brand,
@@ -50,7 +54,8 @@ function fromDbToEntity({
     passengers,
     transmission,
     pricePerDay,
-    image
+    image,
+    reservations ? reservations.map(reservationMapper) : reservations
   );
 }
 

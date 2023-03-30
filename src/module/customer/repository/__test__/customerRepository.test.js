@@ -5,20 +5,22 @@ const CustomerNotDefinedError = require('../../error/CustomerNotDefinedError');
 const CustomerNotFoundError = require('../../error/CustomerNotFoundError');
 const CustomerRepository = require('../customerRepository');
 const createCustomerMock = require('./customer.fixture');
+const ReservationModel = require('../../../reservation/model/reservationModel');
+const createReservationMock = require('../../../reservation/repository/__test__/reservation.fixture');
 
 const sequelize = new Sequelize('sqlite::memory', { logging: false });
 
-let repository;
-
-beforeAll(() => {
-  const customerModel = CustomerModel.initialize(sequelize);
-  repository = new CustomerRepository(customerModel);
-});
-
 describe('CustomerRepository', () => {
+  let repository;
   beforeEach(async () => {
+    const customerModel = CustomerModel.initialize(sequelize);
+    const reservationModel = ReservationModel.initialize(sequelize);
+    customerModel.hasMany(reservationModel, { foreignKey: 'customerId', constraints: false });
+    reservationModel.hasOne(customerModel, { foreignKey: 'customerId', constraints: false });
+    repository = new CustomerRepository(customerModel);
     await sequelize.sync({ force: true });
   });
+
   test('save should create a new customer if the entity has no id', async () => {
     const customerMock = createCustomerMock();
     const savedCustomer = await repository.save(customerMock);
@@ -44,6 +46,14 @@ describe('CustomerRepository', () => {
     await repository.save(createCustomerMock());
     const customer = await repository.getById(1);
     expect(customer.id).toEqual(1);
+  });
+
+  test('getById returns a customer with his associated reservations', async () => {
+    await repository.save(createCustomerMock());
+    ReservationModel.create(createReservationMock());
+    const customer = await repository.getById(1);
+    expect(customer.id).toEqual(1);
+    expect(customer.reservations).toHaveLength(1);
   });
 
   test('getById throws an error if the customer was not found', async () => {

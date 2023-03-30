@@ -1,8 +1,10 @@
 const { fromDbToEntity } = require('../mapper/carMapper');
+const { fromDbToEntity: reservationFromDbToEntity } = require('../../reservation/mapper/reservationMapper');
 const CarNotFoundError = require('../error/CarNotFoundError');
 const CarIdNotDefinedError = require('../error/CarIdNotDefinedError');
 const Car = require('../entity/car');
 const CarNotDefinedError = require('../error/CarNotDefinedError');
+const ReservationModel = require('../../reservation/model/reservationModel');
 
 class CarRepository {
   constructor(CarModel) {
@@ -18,11 +20,16 @@ class CarRepository {
     if (id === undefined) {
       throw new CarIdNotDefinedError();
     }
-    const car = await this.CarModel.findByPk(id);
+
+    const car = await this.CarModel.findByPk(id, {
+      include: [{ model: ReservationModel, order: [['updatedAt', 'DESC']], limit: 3 }],
+    });
+
     if (!car) {
       throw new CarNotFoundError();
     }
-    return fromDbToEntity(car.dataValues);
+
+    return fromDbToEntity(car, reservationFromDbToEntity);
   }
 
   async save(car) {

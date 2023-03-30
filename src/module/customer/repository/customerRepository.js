@@ -3,6 +3,8 @@ const CustomerNotFoundError = require('../error/CustomerNotFoundError');
 const CustomerIdNotDefinedError = require('../error/CustomerIdNotDefinedError');
 const Customer = require('../entity/customer');
 const CustomerNotDefinedError = require('../error/CustomerNotDefinedError');
+const ReservationModel = require('../../reservation/model/reservationModel');
+const { fromDbToEntity: reservationFromDbToEntity } = require('../../reservation/mapper/reservationMapper');
 
 class CustomerRepository {
   constructor(CustomerModel) {
@@ -18,11 +20,19 @@ class CustomerRepository {
     if (id === undefined) {
       throw new CustomerIdNotDefinedError();
     }
-    const customer = await this.CustomerModel.findByPk(id);
+    const customer = await this.CustomerModel.findByPk(id, {
+      include: [
+        {
+          model: ReservationModel,
+          order: [['updatedAt', 'DESC']],
+          limit: 3,
+        },
+      ],
+    });
     if (!customer) {
       throw new CustomerNotFoundError();
     }
-    return fromDbToEntity(customer.dataValues);
+    return fromDbToEntity(customer, reservationFromDbToEntity);
   }
 
   async save(customer) {

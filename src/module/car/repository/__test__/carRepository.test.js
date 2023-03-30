@@ -5,22 +5,24 @@ const CarNotDefinedError = require('../../error/CarNotDefinedError');
 const CarNotFoundError = require('../../error/CarNotFoundError');
 const CarRepository = require('../carRepository');
 const createCarMock = require('./car.fixture');
-
-const sequelize = new Sequelize('sqlite::memory', { logging: false });
-
-let repository;
-
-beforeAll(() => {
-  const carModel = CarModel.initialize(sequelize);
-  repository = new CarRepository(carModel);
-});
+const ReservationModel = require('../../../reservation/model/reservationModel');
+const createReservationMock = require('../../../reservation/repository/__test__/reservation.fixture');
 
 describe('CarRepository', () => {
+  let repository;
   beforeEach(async () => {
+    const sequelize = new Sequelize('sqlite::memory', { logging: false });
+    const carModel = CarModel.initialize(sequelize);
+    const reservationModel = ReservationModel.initialize(sequelize);
+    carModel.hasMany(reservationModel, { foreignKey: 'carId', constraints: false });
+    reservationModel.belongsTo(carModel, { foreignKey: 'carId', constraints: false });
+    repository = new CarRepository(carModel);
     await sequelize.sync({ force: true });
   });
+
   test('save should create a new car if an id is NOT passed', async () => {
-    const savedCar = await repository.save(createCarMock());
+    const carMock = createCarMock();
+    const savedCar = await repository.save(carMock);
     expect(savedCar.id).toEqual(1);
     expect(savedCar.brand).toEqual('Ford');
     expect(savedCar.model).toEqual('Ka');
@@ -49,6 +51,15 @@ describe('CarRepository', () => {
     const car = await repository.getById(1);
     expect(car.id).toEqual(1);
     expect(car.brand).toEqual('Ford');
+  });
+
+  test('getById returns a car with his associated reservations', async () => {
+    await repository.save(createCarMock());
+    ReservationModel.create(createReservationMock());
+    const car = await repository.getById(1);
+    expect(car.id).toEqual(1);
+    expect(car.brand).toEqual('Ford');
+    expect(car.reservations).toHaveLength(1);
   });
 
   test('getById throws an error if the car was not found', async () => {

@@ -10,7 +10,8 @@ class Car {
     passengers,
     transmission,
     pricePerDay,
-    image
+    image,
+    reservations
   ) {
     this.id = id;
     this.brand = brand;
@@ -23,6 +24,7 @@ class Car {
     this.transmission = transmission;
     this.pricePerDay = pricePerDay;
     this.image = image;
+    this.reservations = reservations;
   }
 }
 
