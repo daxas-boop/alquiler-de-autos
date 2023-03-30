@@ -74,4 +74,10 @@ describe('ReservationRepository', () => {
     expect(reservations[0].car.id).toEqual(1);
     expect(reservations[0].customer.id).toEqual(1);
   });
+
+  test('should throw an error if the startDate of the reservation is older than the endDate', async () => {
+    await expect(repository.save(createReservationMock(undefined, true))).rejects.toThrow(
+      'Validation error: Start date cannot be older than the end date'
+    );
+  });
 });

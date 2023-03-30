@@ -1,16 +1,14 @@
 const Reservation = require('../../entity/reservation');
-const createCarMock = require('../../../car/repository/__test__/car.fixture');
-const createCustomerMock = require('../../../customer/repository/__test__/customer.fixture');
 
-function createReservationMock(id) {
+function createReservationMock(id, invalidDates) {
   return new Reservation({
     id,
-    car: createCarMock(1),
-    customer: createCustomerMock(1),
+    car: { id: 1 },
+    customer: { id: 1 },
     carId: 1,
     customerId: 1,
-    endDate: new Date(),
-    startDate: new Date(),
+    startDate: invalidDates ? new Date(2020, 1, 30) : new Date(2020, 1, 20),
+    endDate: new Date(2020, 1, 25),
     isPaid: true,
     paymentMethod: 'cash',
     totalPrice: 3000,
