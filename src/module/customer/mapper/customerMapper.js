@@ -16,7 +16,20 @@ function fromFormToEntity({
 }
 
 function fromDbToEntity(
-  { id, name, surname, documentType, documentNumber, nationality, address, phone, email, birthdate, reservations },
+  {
+    id,
+    name,
+    surname,
+    documentType,
+    documentNumber,
+    nationality,
+    address,
+    phone,
+    email,
+    birthdate,
+    reservations,
+    deletedAt,
+  },
   reservationMapper
 ) {
   return new Customer(
@@ -30,7 +43,8 @@ function fromDbToEntity(
     phone,
     email,
     birthdate,
-    reservations ? reservations.map(reservationMapper) : reservations
+    reservations ? reservations.map(reservationMapper) : reservations,
+    deletedAt
   );
 }
 

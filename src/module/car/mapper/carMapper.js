@@ -40,6 +40,7 @@ function fromDbToEntity(
     pricePerDay,
     image,
     reservations,
+    deletedAt,
   },
   reservationMapper
 ) {
@@ -55,7 +56,8 @@ function fromDbToEntity(
     transmission,
     pricePerDay,
     image,
-    reservations ? reservations.map(reservationMapper) : reservations
+    reservations ? reservations.map(reservationMapper) : reservations,
+    deletedAt
   );
 }
 

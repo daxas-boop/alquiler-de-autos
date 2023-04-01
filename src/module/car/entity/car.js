@@ -11,7 +11,8 @@ class Car {
     transmission,
     pricePerDay,
     image,
-    reservations
+    reservations,
+    deletedAt
   ) {
     this.id = id;
     this.brand = brand;
@@ -25,6 +26,7 @@ class Car {
     this.pricePerDay = pricePerDay;
     this.image = image;
     this.reservations = reservations;
+    this.deletedAt = deletedAt;
   }
 }
 

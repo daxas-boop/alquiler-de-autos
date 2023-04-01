@@ -73,6 +73,7 @@ class CarModel extends Model {
         modelName: 'car',
         underscored: true,
         initialAutoIncrement: 1,
+        paranoid: true,
       }
     );
     return CarModel;

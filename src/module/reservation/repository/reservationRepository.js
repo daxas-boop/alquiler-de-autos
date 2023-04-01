@@ -15,7 +15,10 @@ class ReservationRepository {
 
   async getAll() {
     const reservations = await this.ReservationModel.findAll({
-      include: [{ model: CarModel }, { model: CustomerModel }],
+      include: [
+        { model: CarModel, paranoid: false },
+        { model: CustomerModel, paranoid: false },
+      ],
     });
     return reservations.map((reservation) => fromDbToEntity(reservation, carFromDbToEntity, customerFromDbToEntity));
   }
@@ -25,11 +28,15 @@ class ReservationRepository {
       throw new ReservationIdNotDefinedError();
     }
     const reservation = await this.ReservationModel.findByPk(id, {
-      include: [{ model: CarModel }, { model: CustomerModel }],
+      include: [
+        { model: CarModel, paranoid: false },
+        { model: CustomerModel, paranoid: false },
+      ],
     });
     if (!reservation) {
       throw new ReservationNotFoundError();
     }
+
     return fromDbToEntity(reservation, carFromDbToEntity, customerFromDbToEntity);
   }
 

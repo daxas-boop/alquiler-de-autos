@@ -55,6 +55,7 @@ class CustomerModel extends Model {
         sequelize,
         modelName: 'customer',
         underscored: true,
+        paranoid: true,
       }
     );
     return CustomerModel;

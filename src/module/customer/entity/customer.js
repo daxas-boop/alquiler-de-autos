@@ -10,7 +10,8 @@ class Customer {
     phone,
     email,
     birthdate,
-    reservations
+    reservations,
+    deletedAt
   ) {
     this.id = id;
     this.name = name;
@@ -23,6 +24,7 @@ class Customer {
     this.email = email;
     this.birthdate = birthdate;
     this.reservations = reservations;
+    this.deletedAt = deletedAt;
   }
 }
 
