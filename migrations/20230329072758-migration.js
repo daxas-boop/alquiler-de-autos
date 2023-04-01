@@ -24,7 +24,7 @@ module.exports = {
             image: 'https://cdn.motor1.com/images/mgl/AkkXwL/s1/toyota-corolla-2023.webp',
           },
           {
-            brand: 'Tesal',
+            brand: 'Tesla',
             model: 'Model 3',
             manufactureYear: 2023,
             kilometerMileage: 0,
