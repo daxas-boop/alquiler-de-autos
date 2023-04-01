@@ -11,7 +11,6 @@
     "test:module:car": "jest src/module/car --coverage",
     "test:module:customer": "jest src/module/customer --coverage",
     "test:module:reservation": "jest src/module/reservation --coverage",
-    "sync:db": "node src/config/setup.js",
     "db:migrate": "sequelize-cli db:migrate"
   },
   "repository": {
