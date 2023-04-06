@@ -1,0 +1,57 @@
+{% extends "views/layouts/index.njk" %}
+
+{% block body %}
+  <div class="card">
+    <div class="card-header">
+      <p class="card-header-title">Car Details</p>
+    </div>
+    <div class="card-content">
+      <div class="table-container">
+        <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth is-size-5">
+          <tbody>
+            <tr>
+              <td>ID</td>
+              <td>{{ car.id }}</td>
+            </tr>
+            <tr>
+              <td>Brand</td>
+              <td>{{ car.brand }}</td>
+            </tr>
+            <tr>
+              <td>Model</td>
+              <td>{{ car.model }}</td>
+            </tr>
+            <tr>
+              <td>Manufacture Year</td>
+              <td>{{ car.manufactureYear }}</td>
+            </tr>
+            <tr>
+              <td>Mileage in kms </td>
+              <td>{{ car.kilometerMileage }}</td>
+            </tr>
+            <tr>
+              <td>Color</td>
+              <td>{{ car.color }}</td>
+            </tr>
+            <tr>
+              <td>Has Air Conditioning</td>
+              <td>{{ "Yes" if car.hasAirConditioning == "yes" else "No" }}</td>
+            </tr>
+            <tr>
+              <td>Passengers</td>
+              <td>{{ car.passengers }}</td>
+            </tr>
+            <tr>
+              <td>Transmission</td>
+              <td>{{ "Manual" if car.transmission == "manual" else "Automatic" }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="has-text-centered">
+        <a class="button is-rounded is-link is-outlined" href={{'/car/edit/' + car.id}}>Edit</a>
+        <a class="button is-rounded is-danger is-outlined" href={{'/car/delete/' + car.id}}>Delete</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}
