@@ -6,23 +6,54 @@
     <title>Rent a car</title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"/>
+    <meta name="google-site-verification" content="CtqKA0RQTbsaAjsGY4qUe072Np-ODrKESshXy4IAb50"/>
   </head>
   <body>
     <nav class="navbar is-dark" role="navigation">
       <div class="navbar-brand">
         <a class="navbar-item" href="/">
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/1627/1627497.png"
-            alt="Rent a car"
-            width="28"
-            height="28"/>
+          <img src="https://cdn-icons-png.flaticon.com/512/1627/1627497.png" alt="Rent a car" width="28" height="28"/>
         </a>
-        <a class="navbar-item" href="/car/create">Add a new car</a>
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMain">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
       </div>
+
+      <div class="navbar-menu" id="navbarMain">
+        <div class="navbar-start">
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">Reservations</a>
+            <div class="navbar-dropdown is-size-6">
+              <a class="navbar-item" href="/reservation">Manage reservations</a>
+              <a class="navbar-item" href="/reservation/create">Add a new reservation</a>
+            </div>
+          </div>
+
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">Customers</a>
+            <div class="navbar-dropdown is-size-6">
+              <a class="navbar-item" href="/customer">Manage the customers</a>
+              <a class="navbar-item" href="/customer/create">Add a new customer</a>
+            </div>
+          </div>
+
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">Cars</a>
+            <div class="navbar-dropdown is-size-6">
+              <a class="navbar-item" href="/car">Manage the cars</a>
+              <a class="navbar-item" href="/car/create">Add a new car</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="container is-max-desktop mt-6 mb-6">
+      {% block body %}{% endblock %}
     </div>
-  </nav>
-  <div class="container is-max-desktop mt-6 mb-6">
-    {% block body %}{% endblock %}
-  </div>
-</body>
+  </body>
+  <script src="https://kit.fontawesome.com/0096c34b8d.js" crossorigin="anonymous"></script>
+  <script src="/scripts/navbar.js" ></script>
+  {% block scripts %}{% endblock %}
 </html>

@@ -1,6 +1,6 @@
 const Car = require('../../entity/car');
 const CarController = require('../carController');
-const { createNewCar } = require('../../repository/__test__/car.fixture');
+const createCarMock = require('../../repository/__test__/car.fixture');
 
 const serviceMock = {
   getAll: jest.fn(() => Promise.resolve([])),
@@ -9,7 +9,11 @@ const serviceMock = {
   delete: jest.fn(() => Promise.resolve(true)),
 };
 
-const controller = new CarController(serviceMock);
+const uploadMiddlewareMock = {
+  single: jest.fn(),
+};
+
+const controller = new CarController(serviceMock, uploadMiddlewareMock);
 
 describe('CarController', () => {
   test('configureRoutes should configure the routes', () => {
@@ -22,11 +26,11 @@ describe('CarController', () => {
     expect(app.post).toHaveBeenCalledTimes(2);
   });
 
-  test('index should render index.njk', async () => {
+  test('viewAll should render view-all.njk', async () => {
     const renderMock = jest.fn();
-    await controller.index({}, { render: renderMock });
+    await controller.viewAll({}, { render: renderMock });
     expect(renderMock).toHaveBeenCalledTimes(1);
-    expect(renderMock).toHaveBeenCalledWith('car/views/index.njk', { cars: [] });
+    expect(renderMock).toHaveBeenCalledWith('car/views/view-all.njk', { cars: [] });
   });
 
   test('create should render create.njk', () => {
@@ -38,7 +42,7 @@ describe('CarController', () => {
 
   test('view should render view.njk with a car', async () => {
     const renderMock = jest.fn();
-    const carMock = createNewCar(1);
+    const carMock = createCarMock(1);
     serviceMock.getById.mockImplementationOnce(() => Promise.resolve(carMock));
     await controller.view({ params: { id: carMock.id } }, { render: renderMock });
     expect(renderMock).toHaveBeenCalledTimes(1);
@@ -83,8 +87,9 @@ describe('CarController', () => {
       'has-air-conditioning': 'yes',
       passengers: 4,
       transmission: 'manual',
+      'price-per-day': 200,
     };
-    await controller.save({ body: formMock }, { redirect: redirectMock });
+    await controller.save({ body: formMock, file: { path: '/public/image.png' } }, { redirect: redirectMock });
     expect(serviceMock.save).toHaveBeenCalledTimes(1);
     expect(serviceMock.save).toHaveBeenCalledWith(
       new Car(
@@ -94,9 +99,11 @@ describe('CarController', () => {
         formMock['manufacture-year'],
         formMock['kilometer-mileage'],
         formMock.color,
-        formMock['has-air-conditioning'],
+        true,
         formMock.passengers,
-        formMock.transmission
+        formMock.transmission,
+        formMock['price-per-day'],
+        '/public/image.png'
       )
     );
   });
@@ -123,7 +130,7 @@ describe('CarController', () => {
 
   test('edit should render edit.njk with a car', async () => {
     const renderMock = jest.fn();
-    const carMock = createNewCar(1);
+    const carMock = createCarMock(1);
     serviceMock.getById.mockImplementationOnce(() => Promise.resolve(carMock));
     await controller.edit({ params: { id: carMock.id } }, { render: renderMock });
     expect(renderMock).toHaveBeenCalledTimes(1);

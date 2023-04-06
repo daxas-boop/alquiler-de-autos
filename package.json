@@ -4,9 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node ./src/app.js",
     "start:dev": "nodemon -e js,html,njk ./src/app.js",
     "test": "jest --coverage",
-    "test:dev": "jest --watch"
+    "test:dev": "jest --watch",
+    "test:module:car": "jest src/module/car --coverage",
+    "test:module:customer": "jest src/module/customer --coverage",
+    "test:module:reservation": "jest src/module/reservation --coverage",
+    "db:migrate": "sequelize-cli db:migrate"
   },
   "repository": {
     "type": "git",
@@ -19,19 +24,23 @@
   },
   "homepage": "https://github.com/daxas-boop/alquiler-de-autos#readme",
   "dependencies": {
-    "better-sqlite3": "^8.2.0",
+    "body-parser": "^1.20.2",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-nunjucks": "^2.2.5",
     "jest": "^29.5.0",
+    "multer": "^1.4.5-lts.1",
     "nunjucks": "^3.2.3",
-    "rsdi": "^2.3.0"
+    "rsdi": "^2.3.0",
+    "sequelize": "^6.29.3",
+    "sqlite3": "^5.1.6"
   },
   "devDependencies": {
     "eslint": "^8.36.0",
     "eslint-config-prettier": "^8.7.0",
     "eslint-plugin-jest": "^27.2.1",
     "nodemon": "^2.0.21",
-    "prettier": "^2.8.4"
+    "prettier": "^2.8.4",
+    "sequelize-cli": "^6.6.0"
   }
 }

@@ -10,6 +10,7 @@ function fromFormToEntity({
   'has-air-conditioning': hasAirConditioning,
   passengers,
   transmission,
+  'price-per-day': pricePerDay,
 }) {
   return new Car(
     id,
@@ -18,23 +19,31 @@ function fromFormToEntity({
     manufactureYear,
     kilometerMileage,
     color,
-    hasAirConditioning,
+    hasAirConditioning === 'yes',
     passengers,
-    transmission
+    transmission,
+    pricePerDay
   );
 }
 
-function fromDbToEntity({
-  id,
-  brand,
-  model,
-  manufacture_year: manufactureYear,
-  kilometer_mileage: kilometerMileage,
-  color,
-  has_air_conditioning: hasAirConditioning,
-  passengers,
-  transmission,
-}) {
+function fromDbToEntity(
+  {
+    id,
+    brand,
+    model,
+    manufactureYear,
+    kilometerMileage,
+    color,
+    hasAirConditioning,
+    passengers,
+    transmission,
+    pricePerDay,
+    image,
+    reservations,
+    deletedAt,
+  },
+  reservationMapper
+) {
   return new Car(
     id,
     brand,
@@ -44,7 +53,11 @@ function fromDbToEntity({
     color,
     hasAirConditioning,
     passengers,
-    transmission
+    transmission,
+    pricePerDay,
+    image,
+    reservations ? reservations.map(reservationMapper) : reservations,
+    deletedAt
   );
 }
 

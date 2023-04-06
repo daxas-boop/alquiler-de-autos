@@ -1,0 +1,80 @@
+{% extends "views/layouts/index.njk" %}
+
+{% block body %}
+  <div class="card">
+    <div class="card-header">
+      <p class="card-header-title">Reservation Details</p>
+    </div>
+    <div class="card-content">
+      <div class="table-container">
+        <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth is-size-5">
+          <tbody>
+            <tr>
+              <td>ID</td>
+              <td>{{ reservation.id }}</td>
+            </tr>
+            <td>Customer</td>
+            <td>
+              {%if reservation.customer.deletedAt%}
+                {{reservation.customer.name}}
+                {{reservation.customer.surname}}
+                  (Deleted from the database)
+                {%else%}
+                <a href={{"/customer/view/" + reservation.customer.id}}>
+                  {{reservation.customer.name}}
+                  {{reservation.customer.surname}}
+                </a>
+                {%endif%}
+              </td>
+            </tr>
+            <tr>
+              <td>Car</td>
+              <td>
+                {%if reservation.car.deletedAt%}
+                  {{ reservation.car.brand }}
+                  {{ reservation.car.model }}
+                  {{ reservation.car.manufactureYear }}
+                  (Deleted from the database)
+                {%else%}
+                  <a href={{"/car/view/" + reservation.car.id}}>
+                    {{ reservation.car.brand }}
+                    {{ reservation.car.model }}
+                    {{ reservation.car.manufactureYear }}
+                    {{reservation.car.deletedAt}}
+                  </a>
+                  {%endif%}
+                </td>
+              </tr>
+              <tr>
+                <td>Unitary price</td>
+                <td>${{ reservation.unitaryPrice }}</td>
+              </tr>
+              <tr>
+                <td>Total price</td>
+                <td>${{ reservation.totalPrice }}</td>
+              </tr>
+              <tr>
+                <td>Payment method</td>
+                <td>{{ "Credit card" if reservation.paymentMethod === "card" else "Cash" }}</td>
+              </tr>
+              <tr>
+                <td>Is paid</td>
+                <td>{{ "Yes" if reservation.isPaid else "No"}}</td>
+              </tr>
+              <tr>
+                <td>Start Date</td>
+                <td>{{ reservation.startDate.toISOString().split('T')[0] }}</td>
+              </tr>
+              <tr>
+                <td>End Date</td>
+                <td>{{ reservation.endDate.toISOString().split('T')[0] }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="has-text-centered">
+          <a class="button is-rounded is-link is-outlined" href={{'/reservation/edit/' + reservation.id}}>Edit</a>
+        </div>
+      </div>
+    </div>
+  {% endblock %}

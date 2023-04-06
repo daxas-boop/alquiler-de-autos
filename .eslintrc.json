@@ -6,7 +6,14 @@
     "jest/globals": true
   },
   "extends": ["eslint:recommended", "prettier"],
-  "overrides": [],
+  "overrides": [
+    {
+      "files": ["public/**/*.js"],
+      "env": {
+        "browser": true
+      }
+    }
+  ],
   "plugins": ["jest"],
   "parserOptions": {
     "ecmaVersion": "latest"
