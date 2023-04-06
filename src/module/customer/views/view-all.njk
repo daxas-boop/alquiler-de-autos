@@ -1,6 +1,9 @@
 {% extends "views/layouts/index.njk" %}
 
 {% block body %}
+  <div class="has-text-centered">
+    <h2 class="is-size-3">Customers</h2>
+  </div>
   <p class="ml-1 is-size-5">Number of customers: {{customers.length}}</p>
   <div class="table-container mt-1" style="max-height: 85vh; overflow-y: auto;">
     <table class="table is-bordered is-size-5 is-striped has-text-centered is-hoverable is-fullwidth">
